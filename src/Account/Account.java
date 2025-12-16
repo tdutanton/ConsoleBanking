@@ -2,14 +2,6 @@ package Account;
 import Customer.*;
 
 public abstract class Account {
-    public Integer getAccountNumber() {
-        return accountNumber;
-    }
-
-    public void setAccountNumber(Integer accountNumber) {
-        this.accountNumber = accountNumber;
-    }
-
     private Integer accountNumber;
     private double balance;
     private Customer owner;
@@ -57,5 +49,17 @@ public abstract class Account {
 
     protected boolean isWithdrawPossible(double amount) {
         return this.balance > amount;
+    }
+
+    public Integer getAccountNumber() {
+        return accountNumber;
+    }
+
+    public Customer getOwner() { return this.owner; }
+    public double getBalance() { return this.balance; }
+
+    @Override
+    public String toString() {
+        return String.format("Банковский счет № %d, баланс: %.2f", getAccountNumber(), getBalance());
     }
 }

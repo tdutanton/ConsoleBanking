@@ -10,7 +10,7 @@ public class OperationResult {
     }
 
     public static OperationResult success() {
-        return new OperationResult(true, "");
+        return new OperationResult(true, "OK");
     }
 
     public static OperationResult failure(String reason) {

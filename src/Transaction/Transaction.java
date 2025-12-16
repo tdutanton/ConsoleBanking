@@ -1,6 +1,8 @@
 package Transaction;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Map;
 
 public class Transaction {
     private Type type;
@@ -26,6 +28,23 @@ public class Transaction {
         this.amount = amount;
         this.fromAccountNumber = from;
         this.toAccountNumber = to;
+    }
+
+    private static final Map<Type, String> nameOperations = Map.of(
+            Type.DEPOSIT, "Пополнение",
+            Type.TRANSFER, "Перевод между счетами",
+            Type.WITHDRAW, "Снятие"
+    );
+
+    @Override
+    public String toString() {
+        return String.format("Операция: %s, сумма: %.2f руб., от счета № %d на счет %d, " +
+                "дата-время: %s, статус: %s, статусное сообщение: %s",
+                nameOperations.get(this.type), this.amount,
+                this.getFromAccountNumber(),
+                (this.getToAccountNumber() != null ? this.getToAccountNumber() : null),
+                this.getTimestamp().format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss")), (this.isSuccess() ? "Успешно" : "Неуспешно"),
+                this.getMessage());
     }
 
     public Type getType() {
