@@ -1,45 +1,58 @@
+import Bank.Bank;
+import Interaction.Interaction;
+import Utils.BankNumberGenerator;
+import Utils.IDGenerator;
+import Utils.MathRandomGenerator;
+import Utils.SequentialIDGenerator;
+
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class Main {
-    private static final Scanner scanner = new Scanner(System.in);
     public static void main(String[] args) {
+        final Scanner scanner = new Scanner(System.in);
+        final IDGenerator idGenerator = new SequentialIDGenerator();
+        final BankNumberGenerator bankNumberGenerator = new MathRandomGenerator();
+        final Bank bank = new Bank(idGenerator, bankNumberGenerator);
+        final Interaction interaction = new Interaction(bank, scanner);
+
+        final Map<Integer, Runnable> menuActions = new HashMap<>() {{
+            put(1, interaction::createCustomer);
+            put(2, interaction::openDebitAccount);
+            put(0, () -> {
+                System.out.println("Спасибо за использование банка. До свидания!");
+                System.exit(0);
+            });
+        }};
+
         System.out.println("Добро пожаловать в консольный банк!\n");
+        runMenu(scanner, interaction, menuActions);
+       }
 
-        while (true) {
+
+    private static void runMenu(Scanner scanner, Interaction interaction, Map<Integer, Runnable> menuActions) {
+        boolean[] shouldExit = { false };
+        Map<Integer, Runnable> actions = new HashMap<>(menuActions);
+        actions.put(0, () -> {
+            System.out.println("Спасибо за использование банка. До свидания!");
+            shouldExit[0] = true;
+        });
+        while (!shouldExit[0]) {
             showMenu();
-            int choice = getIntInput();
-
-            switch (choice) {
-                case 1:
-                    createCustomer();
-                    break;
-                case 2:
-                    openAccount();
-                    break;
-                case 3:
-                    deposit();
-                    break;
-                case 4:
-                    withdraw();
-                    break;
-                case 5:
-                    printCustomerAccounts();
-                    break;
-                case 6:
-                    printReport();
-                    break;
-                case 0:
-                    System.out.println("Спасибо за использование банка. До свидания!");
-                    return;
-                default:
-                    System.out.println("Неверный выбор. Попробуйте снова.\n");
+            int choice = interaction.getIntInput();
+            Runnable action = actions.get(choice);
+            if (action != null) {
+                action.run();
+            } else {
+                System.out.println("Неверный выбор. Попробуйте снова.\n");
             }
         }
     }
 
     private static void showMenu() {
-        System.out.println("\n--- МЕНЮ ---");
-        System.out.print("Выберите действие: ");
+        System.out.println("--- МЕНЮ ---");
+        System.out.println("Выберите действие: ");
         System.out.println("1.	Создать клиента");
         System.out.println("2.	Открыть дебетовый счёт");
         System.out.println("3.	Открыть кредитный счёт");
@@ -51,7 +64,7 @@ public class Main {
         System.out.println("9.	Отчёт банка");
         System.out.println("0.	Выход");
     }
-
+/*
     private static int getIntInput() {
         while (!scanner.hasNextInt()) {
             System.out.print("Пожалуйста, введите число: ");
@@ -111,5 +124,5 @@ public class Main {
             scanner.next();
         }
         return scanner.nextDouble();
-    }
+    }*/
 }

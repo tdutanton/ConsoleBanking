@@ -5,12 +5,9 @@ import Customer.Customer;
 import Transaction.*;
 import Utils.BankNumberGenerator;
 import Utils.IDGenerator;
-import Utils.SequentialIDGenerator;
 
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 public class Bank {
     private ArrayList<Customer> customers;
@@ -30,7 +27,9 @@ public class Bank {
     }
 
     public Customer createCustomer(String fullName) {
-        return new Customer(idGenerator.nextId(), fullName);
+        Customer customer = new Customer(idGenerator.nextId(), fullName);
+        customers.add(customer);
+        return customer;
     }
 
     public boolean hasSameNumber(Integer number) {
@@ -60,6 +59,13 @@ public class Bank {
     public Account findAccount(Integer accountNumber) {
         return accounts.stream()
                 .filter(a -> Objects.equals(a.getAccountNumber(), accountNumber))
+                .findFirst()
+                .orElse(null);
+    }
+
+    public Customer findCustomer(String customerName) {
+        return customers.stream()
+                .filter(a -> Objects.equals(a.getFullName(), customerName))
                 .findFirst()
                 .orElse(null);
     }
