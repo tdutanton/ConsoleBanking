@@ -37,27 +37,32 @@ Educational project - implementation of Console Banking app with Java
 
 ## Структура проекта  
 src/  
-├── Main.java  
+├── Main.java    
 ├── Account/  
 │ ├── Account.java  
 │ ├── CreditAccount.java  
-│ ├── DebitAccount.java  
-│ └── OperationResult.java  
+│ └── DebitAccount.java  
+│  
 ├── Bank/  
 │ └── Bank.java  
+│  
 ├── Customer/  
 │ └── Customer.java  
+│
 ├── Interaction/  
 │ └── Interaction.java  
+│
 ├── Transaction/  
 │ ├── Transaction.java  
 │ ├── TransactionService.java  
+│ ├── OperationResult.java  
 │ └── Type.java  
+│  
 └── Utils/  
-├── BankNumberGenerator.java  
-├── IDGenerator.java  
-├── MathRandomGenerator.java  
-└── SequentialIDGenerator.java  
+    ├── BankNumberGenerator.java  
+    ├── IDGenerator.java  
+    ├── MathRandomGenerator.java  
+    └── SequentialIDGenerator.java  
 
 ---
 

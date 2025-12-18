@@ -4,6 +4,14 @@ import Account.*;
 
 import java.time.LocalDateTime;
 
+/**
+ * Сервис для выполнения банковских операций и создания записей о транзакциях.
+ * <p>
+ * Обеспечивает инкапсуляцию логики выполнения операций (депозит, снятие, перевод)
+ * и автоматическое создание соответствующих объектов {@link Transaction}
+ * с фиксацией времени, статуса и сообщения.
+ * </p>
+ */
 public class TransactionService {
 
     public Transaction performDeposit(Account account, double amount) {

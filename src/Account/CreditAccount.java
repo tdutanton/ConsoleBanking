@@ -1,6 +1,11 @@
 package Account;
+import Bank.Bank;
 import Customer.*;
 
+/**
+ * Кредитный банковский счет
+ * Является дочерним классом абстрактного класса {@link Account}
+ */
 public class CreditAccount extends Account{
     private final double creditLimit;
 

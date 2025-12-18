@@ -1,6 +1,15 @@
 package Account;
 import Customer.*;
+import Transaction.OperationResult;
 
+/**
+ * Абстрактный базовый класс, представляющий банковский счёт.
+ * <p>
+ * Содержит общую логику для всех типов счетов: депозит, снятие, перевод.
+ * Баланс и номер счёта не могут быть изменены после создания.
+ * Владелец счёта фиксируется при создании и не может быть изменён.
+ * </p>
+ */
 public abstract class Account {
     private final Integer accountNumber;
     private double balance;
