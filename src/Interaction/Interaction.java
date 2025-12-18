@@ -101,7 +101,7 @@ public class Interaction {
         Customer customer = bank.findCustomer(name);
         if (customer != null) {
             Account account = bank.openDebitAccount(customer);
-            if (account instanceof DebitAccount resAccount) {
+            if (account instanceof DebitAccount) {
                 System.out.printf("Дебетовый счёт для клиента %s открыт. № счета %d%n", account.getOwner().getFullName(), account.getAccountNumber());
             }
         } else {

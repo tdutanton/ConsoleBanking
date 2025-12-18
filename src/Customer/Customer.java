@@ -1,8 +1,8 @@
 package Customer;
 
 public class Customer {
-    private Integer id;
-    private String fullName;
+    private final Integer id;
+    private final String fullName;
 
     public Customer (Integer id, String fullName) {
         this.id = id;
