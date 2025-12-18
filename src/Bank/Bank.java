@@ -41,7 +41,7 @@ public class Bank {
         do {
             number = numberGenerator.bankAccountNumber();
         } while (hasSameNumber(number));
-        Account account = new DebitAccount(number, 0.0, owner);
+        DebitAccount account = new DebitAccount(number, 0.0, owner);
         accounts.add(account);
         return account;
     }
@@ -51,7 +51,7 @@ public class Bank {
         do {
             number = numberGenerator.bankAccountNumber();
         } while (hasSameNumber(number));
-        Account account = new CreditAccount(number, 0.0, owner, creditLimit);
+        CreditAccount account = new CreditAccount(number, 0.0, owner, creditLimit);
         accounts.add(account);
         return account;
     }

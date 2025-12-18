@@ -1,6 +1,6 @@
 package Interaction;
 
-import Account.Account;
+import Account.*;
 import Bank.Bank;
 import Customer.Customer;
 
@@ -23,15 +23,8 @@ public class Interaction {
         Map<Integer, Runnable> map = new HashMap<>();
         map.put(1, this::createCustomer);
         map.put(2, this::openDebitAccount);
+        map.put(3, this::openCreditAccount);
         return map;
-    }
-
-    public void createCustomer() {
-        System.out.print("Введите полное имя клиента: ");
-        scanner.nextLine();
-        String name = scanner.nextLine();
-        Customer customer = bank.createCustomer(name);
-        System.out.printf("Создан клиент: %s%n", customer.getFullName());
     }
 
     public int getIntInput() {
@@ -42,6 +35,22 @@ public class Interaction {
         return scanner.nextInt();
     }
 
+    private double getDoubleInput() {
+        while (!scanner.hasNextDouble()) {
+            System.out.print("Пожалуйста, введите корректную сумму: ");
+            scanner.next();
+        }
+        return scanner.nextDouble();
+    }
+
+    public void createCustomer() {
+        System.out.print("Введите полное имя клиента: ");
+        scanner.nextLine();
+        String name = scanner.nextLine();
+        Customer customer = bank.createCustomer(name);
+        System.out.printf("Создан клиент: %s%n", customer.getFullName());
+    }
+
     public void openDebitAccount() {
         System.out.print("Введите полное имя клиента: ");
         scanner.nextLine();
@@ -49,7 +58,29 @@ public class Interaction {
         Customer customer = bank.findCustomer(name);
         if (customer != null) {
             Account account = bank.openDebitAccount(customer);
-            System.out.printf("Счёт для клиента %s открыт. № счета %d%n", account.getOwner().getFullName(), account.getAccountNumber());
+            if (account instanceof CreditAccount resAccount) {
+            System.out.printf("Дебетовый счёт для клиента %s открыт. № счета %d%n", account.getOwner().getFullName(), account.getAccountNumber());
+            }
+        } else {
+            System.out.printf("Клиент %s не найдет. Счет не удалось открыть.%n", name);
+        }
+    }
+
+    public void openCreditAccount() {
+        System.out.print("Введите полное имя клиента: ");
+        scanner.nextLine();
+        String name = scanner.nextLine();
+        Customer customer = bank.findCustomer(name);
+        if (customer != null) {
+            System.out.print("Введите кредитный лимит (руб.).");
+            double limit = getDoubleInput();
+            Account account = bank.openCreditAccount(customer, limit);
+            if (account instanceof CreditAccount resAccount) {
+                System.out.printf("Кредитный счёт для клиента %s открыт с лимитом %.2f. № счета %d%n",
+                        resAccount.getOwner().getFullName(),
+                        resAccount.getCreditLimit(),
+                        resAccount.getAccountNumber());
+            }
         } else {
             System.out.printf("Клиент %s не найдет. Счет не удалось открыть.%n", name);
         }
