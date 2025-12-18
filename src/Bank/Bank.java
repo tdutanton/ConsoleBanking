@@ -100,7 +100,7 @@ public class Bank {
             }
         }
         if (!found) {
-            System.out.println("У клиента с ID " + customerId + " нет счетов.");
+            System.out.printf("У клиента с ID %d нет счетов%n", customerId);
         }
     }
 

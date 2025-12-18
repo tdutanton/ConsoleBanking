@@ -24,6 +24,11 @@ public class Interaction {
         map.put(1, this::createCustomer);
         map.put(2, this::openDebitAccount);
         map.put(3, this::openCreditAccount);
+        map.put(4, this::deposit);
+        map.put(5, this::withdraw);
+        map.put(6, this::transfer);
+        map.put(7, this::showCustomerAccounts);
+        map.put(8, this::showTransactions);
         return map;
     }
 
@@ -58,8 +63,8 @@ public class Interaction {
         Customer customer = bank.findCustomer(name);
         if (customer != null) {
             Account account = bank.openDebitAccount(customer);
-            if (account instanceof CreditAccount resAccount) {
-            System.out.printf("Дебетовый счёт для клиента %s открыт. № счета %d%n", account.getOwner().getFullName(), account.getAccountNumber());
+            if (account instanceof DebitAccount resAccount) {
+                System.out.printf("Дебетовый счёт для клиента %s открыт. № счета %d%n", account.getOwner().getFullName(), account.getAccountNumber());
             }
         } else {
             System.out.printf("Клиент %s не найдет. Счет не удалось открыть.%n", name);
@@ -84,6 +89,76 @@ public class Interaction {
         } else {
             System.out.printf("Клиент %s не найдет. Счет не удалось открыть.%n", name);
         }
+    }
+
+    public void deposit() {
+        System.out.print("Введите номер счёта: ");
+        int accountNumber = getIntInput();
+        Account account = bank.findAccount(accountNumber);
+        if (account != null) {
+            System.out.print("Введите сумму пополнения: ");
+            double amount = getDoubleInput();
+            if (bank.deposit(accountNumber, amount)) {
+                System.out.printf("Счёт %d пополнен на %.2f руб.%n", accountNumber, amount);
+            } else {
+                System.out.printf("Пополнение не удалось.%n");
+            }
+        } else {
+            System.out.printf("Клиент с номером счета %d не найдет.%n", accountNumber);
+        }
+    }
+
+    public void withdraw() {
+        System.out.print("Введите номер счёта: ");
+        int accountNumber = getIntInput();
+        Account account = bank.findAccount(accountNumber);
+        if (account != null) {
+            System.out.print("Введите сумму снятия: ");
+            double amount = getDoubleInput();
+            if (bank.withdraw(accountNumber, amount)) {
+                System.out.printf("Со счета %d снято %.2f руб.%n", accountNumber, amount);
+            } else {
+                System.out.printf("Снятие не удалось.%n");
+            }
+        } else {
+            System.out.printf("Клиент с номером счета %d не найдет.%n", accountNumber);
+        }
+    }
+
+    public void transfer() {
+        System.out.print("Введите номер счёта отправителя: ");
+        int accountNumberFrom = getIntInput();
+        Account accountFrom = bank.findAccount(accountNumberFrom);
+        System.out.print("Введите номер счёта получателя: ");
+        int accountNumberTo = getIntInput();
+        Account accountTo = bank.findAccount(accountNumberTo);
+        if (accountFrom != null && accountTo != null) {
+            System.out.print("Введите сумму перевода: ");
+            double amount = getDoubleInput();
+            if (bank.transfer(accountNumberFrom, accountNumberTo, amount)) {
+                System.out.printf("Со счета %d на счет %d переведено %.2f руб.%n", accountNumberFrom, accountNumberTo, amount);
+            } else {
+                System.out.printf("Перевод не удался.%n");
+            }
+        } else {
+            System.out.printf("Клиент(-ы) не найден(-ы).%n");
+        }
+    }
+
+    public void showCustomerAccounts() {
+        System.out.print("Введите полное имя клиента: ");
+        scanner.nextLine();
+        String name = scanner.nextLine();
+        Customer customer = bank.findCustomer(name);
+        if (customer != null) {
+            bank.printCustomerAccounts(customer.getId());
+        } else {
+            System.out.printf("Клиент %s не найдет.%n", name);
+        }
+    }
+
+    public void showTransactions() {
+        bank.printTransactions();
     }
 
     public void showMenu() {
