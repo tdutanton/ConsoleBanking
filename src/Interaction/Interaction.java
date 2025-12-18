@@ -13,6 +13,8 @@ public class Interaction {
     private final Scanner scanner;
     private final Map<Integer, Runnable> menuActions;
 
+    private static final String END_MSG = "< Конец сообщения >%n%n";
+
     public Interaction(Bank bank, Scanner scanner) {
         this.bank = bank;
         this.scanner = scanner;
@@ -29,7 +31,42 @@ public class Interaction {
         map.put(6, this::transfer);
         map.put(7, this::showCustomerAccounts);
         map.put(8, this::showTransactions);
+        map.put(9, this::showBankReport);
         return map;
+    }
+
+    public void showMenu() {
+        System.out.println("--- МЕНЮ ---");
+        System.out.println("Выберите действие: ");
+        System.out.println("1.	Создать клиента");
+        System.out.println("2.	Открыть дебетовый счёт");
+        System.out.println("3.	Открыть кредитный счёт");
+        System.out.println("4.	Пополнить");
+        System.out.println("5.	Снять");
+        System.out.println("6.	Перевести");
+        System.out.println("7.	Показать счета клиента");
+        System.out.println("8.	Показать транзакции");
+        System.out.println("9.	Отчёт банка");
+        System.out.println("0.	Выход");
+    }
+
+    public void runMenu() {
+        boolean shouldExit = false;
+        while (!shouldExit) {
+            showMenu();
+            int choice = getIntInput();
+            if (choice == 0) {
+                System.out.println("Выход из консольного банка.");
+                shouldExit = true;
+            } else {
+                Runnable action = menuActions.get(choice);
+                if (action != null) {
+                    action.run();
+                } else {
+                    System.out.println("Неверный выбор. Попробуйте снова.\n");
+                }
+            }
+        }
     }
 
     public int getIntInput() {
@@ -54,6 +91,7 @@ public class Interaction {
         String name = scanner.nextLine();
         Customer customer = bank.createCustomer(name);
         System.out.printf("Создан клиент: %s%n", customer.getFullName());
+        System.out.printf(END_MSG);
     }
 
     public void openDebitAccount() {
@@ -69,6 +107,7 @@ public class Interaction {
         } else {
             System.out.printf("Клиент %s не найдет. Счет не удалось открыть.%n", name);
         }
+        System.out.printf(END_MSG);
     }
 
     public void openCreditAccount() {
@@ -89,6 +128,7 @@ public class Interaction {
         } else {
             System.out.printf("Клиент %s не найдет. Счет не удалось открыть.%n", name);
         }
+        System.out.printf(END_MSG);
     }
 
     public void deposit() {
@@ -106,6 +146,7 @@ public class Interaction {
         } else {
             System.out.printf("Клиент с номером счета %d не найдет.%n", accountNumber);
         }
+        System.out.printf(END_MSG);
     }
 
     public void withdraw() {
@@ -123,6 +164,7 @@ public class Interaction {
         } else {
             System.out.printf("Клиент с номером счета %d не найдет.%n", accountNumber);
         }
+        System.out.printf(END_MSG);
     }
 
     public void transfer() {
@@ -143,6 +185,7 @@ public class Interaction {
         } else {
             System.out.printf("Клиент(-ы) не найден(-ы).%n");
         }
+        System.out.printf(END_MSG);
     }
 
     public void showCustomerAccounts() {
@@ -155,44 +198,18 @@ public class Interaction {
         } else {
             System.out.printf("Клиент %s не найдет.%n", name);
         }
+        System.out.printf(END_MSG);
     }
 
     public void showTransactions() {
+        System.out.println("Отчет по транзакциям");
         bank.printTransactions();
+        System.out.printf(END_MSG);
     }
 
-    public void showMenu() {
-        System.out.println("--- МЕНЮ ---");
-        System.out.println("Выберите действие: ");
-        System.out.println("1.	Создать клиента");
-        System.out.println("2.	Открыть дебетовый счёт");
-        System.out.println("3.	Открыть кредитный счёт");
-        System.out.println("4.	Пополнить");
-        System.out.println("5.	Снять");
-        System.out.println("6.	Перевести");
-        System.out.println("7.	Показать счета клиента");
-        System.out.println("8.	Показать транзакции");
-        System.out.println("9.	Отчёт банка");
-        System.out.println("0.	Выход");
-    }
-
-    public void runMenu() {
-        boolean shouldExit = false;
-        while (!shouldExit) {
-            showMenu();
-            int choice = getIntInput();
-
-            if (choice == 0) {
-                System.out.println("Спасибо за использование банка. До свидания!");
-                shouldExit = true;
-            } else {
-                Runnable action = menuActions.get(choice);
-                if (action != null) {
-                    action.run();
-                } else {
-                    System.out.println("Неверный выбор. Попробуйте снова.\n");
-                }
-            }
-        }
+    public void showBankReport() {
+        System.out.println("Отчет банка сформирован");
+        bank.printReport();
+        System.out.printf(END_MSG);
     }
 }

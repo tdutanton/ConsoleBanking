@@ -2,9 +2,9 @@ package Account;
 import Customer.*;
 
 public abstract class Account {
-    private Integer accountNumber;
+    private final Integer accountNumber;
     private double balance;
-    private Customer owner;
+    private final Customer owner;
 
     public Account(Integer number, double balance, Customer owner) {
         this.accountNumber = number;

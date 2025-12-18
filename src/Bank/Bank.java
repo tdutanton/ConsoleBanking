@@ -15,7 +15,7 @@ public class Bank {
     private ArrayList<Transaction> transactions;
     private final IDGenerator idGenerator;
     private final BankNumberGenerator numberGenerator;
-    private TransactionService transactionService;
+    private final TransactionService transactionService;
 
     public Bank(IDGenerator idGenerator, BankNumberGenerator numberGenerator) {
         this.idGenerator = idGenerator;
@@ -116,12 +116,11 @@ public class Bank {
 
     public void printReport() {
         System.out.println("=== ОБЩИЙ ОТЧЁТ БАНКА ===");
+
         int debitCount = 0;
         double debitBalance = 0.0;
-
         int creditCount = 0;
         double creditBalance = 0.0;
-
         for (Account account : accounts) {
             if (account instanceof DebitAccount) {
                 debitCount++;
@@ -131,7 +130,6 @@ public class Bank {
                 creditBalance += account.getBalance();
             }
         }
-
         System.out.println("Счета по типам:");
         if (debitCount > 0) {
             System.out.printf("  Количество счетов типа DEBIT: %d, баланс: %.2f%n", debitCount, debitBalance);
@@ -142,7 +140,6 @@ public class Bank {
 
         int successful = 0;
         int failed = 0;
-
         for (Transaction tx : transactions) {
             if (tx.isSuccess()) {
                 successful++;
@@ -153,7 +150,6 @@ public class Bank {
         System.out.println("Транзакции:");
         System.out.printf("  Успешных: %d%n", successful);
         System.out.printf("  Неуспешных: %d%n", failed);
-
         System.out.println("========================");
     }
 }
