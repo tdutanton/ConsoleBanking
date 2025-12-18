@@ -11,7 +11,7 @@ public class Main {
         final BankNumberGenerator bankNumberGenerator = new MathRandomGenerator();
         final Bank bank = new Bank(idGenerator, bankNumberGenerator);
         final Interaction interaction = new Interaction(bank, scanner);
-        System.out.println("Добро пожаловать в консольный банк!\n");
+        System.out.println("Добро пожаловать в консольный банк!");
         interaction.runMenu();
     }
 }
