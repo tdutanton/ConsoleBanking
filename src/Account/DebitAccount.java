@@ -2,12 +2,12 @@ package Account;
 import Customer.*;
 
 public class DebitAccount extends Account {
-    public DebitAccount(Integer number, double balance, Customer owner) {
+    public DebitAccount(Integer number, long balance, Customer owner) {
         super(number, balance, owner);
     }
 
     @Override
-    protected boolean isWithdrawPossible(double amount) {
+    protected boolean isWithdrawPossible(long amount) {
         return getBalance() >= amount;
     }
 }

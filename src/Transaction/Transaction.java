@@ -6,14 +6,14 @@ import java.util.Map;
 
 public class Transaction {
     private Type type;
-    private double amount;
+    private long amount;
     private Integer fromAccountNumber;
     private Integer toAccountNumber;
     private LocalDateTime timestamp;
     private boolean success;
     private String message;
 
-    public Transaction(Type type, double amount, Integer from, Integer to, LocalDateTime timestamp, boolean success, String msg) {
+    public Transaction(Type type, long amount, Integer from, Integer to, LocalDateTime timestamp, boolean success, String msg) {
         this.type = type;
         this.amount = amount;
         this.fromAccountNumber = from;
@@ -23,7 +23,7 @@ public class Transaction {
         this.message = msg;
     }
 
-    public Transaction(Type type, double amount, Integer from, Integer to) {
+    public Transaction(Type type, long amount, Integer from, Integer to) {
         this.type = type;
         this.amount = amount;
         this.fromAccountNumber = from;
@@ -40,7 +40,7 @@ public class Transaction {
     public String toString() {
         return String.format("Операция: %s, сумма: %.2f руб., от счета № %d на счет %d, " +
                 "дата-время: %s, статус: %s, статусное сообщение: %s",
-                nameOperations.get(this.type), this.amount,
+                nameOperations.get(this.type), this.amount / 100.0,
                 this.getFromAccountNumber(),
                 (this.getToAccountNumber() != null ? this.getToAccountNumber() : null),
                 this.getTimestamp().format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss")), (this.isSuccess() ? "Успешно" : "Неуспешно"),
@@ -55,11 +55,11 @@ public class Transaction {
         this.type = type;
     }
 
-    public double getAmount() {
+    public long getAmount() {
         return amount;
     }
 
-    public void setAmount(double amount) {
+    public void setAmount(long amount) {
         this.amount = amount;
     }
 

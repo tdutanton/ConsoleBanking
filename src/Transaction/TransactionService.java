@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 
 public class TransactionService {
 
-    public Transaction performDeposit(Account account, double amount) {
+    public Transaction performDeposit(Account account, long amount) {
         Transaction tx = new Transaction(Type.DEPOSIT, amount, null, account.getAccountNumber());
         OperationResult result = account.deposit(amount);
         tx.setTimestamp(LocalDateTime.now());
@@ -15,7 +15,7 @@ public class TransactionService {
         return tx;
     }
 
-    public Transaction performWithdraw(Account account, double amount) {
+    public Transaction performWithdraw(Account account, long amount) {
         Transaction tx = new Transaction(Type.WITHDRAW, amount, account.getAccountNumber(), null);
         OperationResult result = account.withdraw(amount);
         tx.setTimestamp(LocalDateTime.now());
@@ -24,7 +24,7 @@ public class TransactionService {
         return tx;
     }
 
-    public Transaction performTransfer(Account from, Account to, double amount) {
+    public Transaction performTransfer(Account from, Account to, long amount) {
         Transaction tx = new Transaction(
                 Type.TRANSFER,
                 amount,

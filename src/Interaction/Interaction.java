@@ -85,6 +85,14 @@ public class Interaction {
         return scanner.nextDouble();
     }
 
+    private long getLongInput() {
+        while (!scanner.hasNextLong()) {
+            System.out.print("Пожалуйста, введите корректную сумму: ");
+            scanner.next();
+        }
+        return scanner.nextLong();
+    }
+
     public void createCustomer() {
         System.out.print("Введите полное имя клиента: ");
         scanner.nextLine();
@@ -116,13 +124,13 @@ public class Interaction {
         String name = scanner.nextLine();
         Customer customer = bank.findCustomer(name);
         if (customer != null) {
-            System.out.print("Введите кредитный лимит (руб.).");
-            double limit = getDoubleInput();
+            System.out.print("Введите кредитный лимит (коп.).");
+            long limit = getLongInput();
             Account account = bank.openCreditAccount(customer, limit);
             if (account instanceof CreditAccount resAccount) {
                 System.out.printf("Кредитный счёт для клиента %s открыт с лимитом %.2f. № счета %d%n",
                         resAccount.getOwner().getFullName(),
-                        resAccount.getCreditLimit(),
+                        resAccount.getCreditLimit() / 100.0,
                         resAccount.getAccountNumber());
             }
         } else {
@@ -136,10 +144,10 @@ public class Interaction {
         int accountNumber = getIntInput();
         Account account = bank.findAccount(accountNumber);
         if (account != null) {
-            System.out.print("Введите сумму пополнения: ");
-            double amount = getDoubleInput();
+            System.out.print("Введите сумму пополнения в коп.: ");
+            long amount = getLongInput();
             if (bank.deposit(accountNumber, amount)) {
-                System.out.printf("Счёт %d пополнен на %.2f руб.%n", accountNumber, amount);
+                System.out.printf("Счёт %d пополнен на %.2f руб.%n", accountNumber, amount / 100.0);
             } else {
                 System.out.printf("Пополнение не удалось.%n");
             }
@@ -154,10 +162,10 @@ public class Interaction {
         int accountNumber = getIntInput();
         Account account = bank.findAccount(accountNumber);
         if (account != null) {
-            System.out.print("Введите сумму снятия: ");
-            double amount = getDoubleInput();
+            System.out.print("Введите сумму снятия в коп.: ");
+            long amount = getLongInput();
             if (bank.withdraw(accountNumber, amount)) {
-                System.out.printf("Со счета %d снято %.2f руб.%n", accountNumber, amount);
+                System.out.printf("Со счета %d снято %.2f руб.%n", accountNumber, amount / 100.0);
             } else {
                 System.out.printf("Снятие не удалось.%n");
             }
@@ -175,10 +183,10 @@ public class Interaction {
         int accountNumberTo = getIntInput();
         Account accountTo = bank.findAccount(accountNumberTo);
         if (accountFrom != null && accountTo != null) {
-            System.out.print("Введите сумму перевода: ");
-            double amount = getDoubleInput();
+            System.out.print("Введите сумму перевода в коп.: ");
+            long amount = getLongInput();
             if (bank.transfer(accountNumberFrom, accountNumberTo, amount)) {
-                System.out.printf("Со счета %d на счет %d переведено %.2f руб.%n", accountNumberFrom, accountNumberTo, amount);
+                System.out.printf("Со счета %d на счет %d переведено %.2f руб.%n", accountNumberFrom, accountNumberTo, amount / 100.0);
             } else {
                 System.out.printf("Перевод не удался.%n");
             }

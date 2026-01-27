@@ -41,17 +41,17 @@ public class Bank {
         do {
             number = numberGenerator.bankAccountNumber();
         } while (hasSameNumber(number));
-        DebitAccount account = new DebitAccount(number, 0.0, owner);
+        DebitAccount account = new DebitAccount(number, 0, owner);
         accounts.add(account);
         return account;
     }
 
-    public Account openCreditAccount(Customer owner, double creditLimit) {
+    public Account openCreditAccount(Customer owner, long creditLimit) {
         Integer number;
         do {
             number = numberGenerator.bankAccountNumber();
         } while (hasSameNumber(number));
-        CreditAccount account = new CreditAccount(number, 0.0, owner, creditLimit);
+        CreditAccount account = new CreditAccount(number, 0, owner, creditLimit);
         accounts.add(account);
         return account;
     }
@@ -70,19 +70,19 @@ public class Bank {
                 .orElse(null);
     }
 
-    public boolean deposit(Integer accountNumber, double amount) {
+    public boolean deposit(Integer accountNumber, long amount) {
         Transaction res = transactionService.performDeposit(this.findAccount(accountNumber), amount);
         transactions.add(res);
         return res.isSuccess();
     }
 
-    public boolean withdraw(Integer accountNumber, double amount) {
+    public boolean withdraw(Integer accountNumber, long amount) {
         Transaction res = transactionService.performWithdraw(this.findAccount(accountNumber), amount);
         transactions.add(res);
         return res.isSuccess();
     }
 
-    public boolean transfer(Integer from, Integer to, double amount) {
+    public boolean transfer(Integer from, Integer to, long amount) {
         Account f = findAccount(from);
         Account t = findAccount(to);
         Transaction res = transactionService.performTransfer(f, t, amount);
@@ -124,10 +124,10 @@ public class Bank {
         for (Account account : accounts) {
             if (account instanceof DebitAccount) {
                 debitCount++;
-                debitBalance += account.getBalance();
+                debitBalance += account.getBalance() / 100.0;
             } else if (account instanceof CreditAccount) {
                 creditCount++;
-                creditBalance += account.getBalance();
+                creditBalance += account.getBalance() / 100.0;
             }
         }
         System.out.println("Счета по типам:");

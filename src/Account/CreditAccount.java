@@ -2,19 +2,19 @@ package Account;
 import Customer.*;
 
 public class CreditAccount extends Account{
-    private final double creditLimit;
+    private final long creditLimit;
 
-    public CreditAccount(Integer number, double balance, Customer owner, double limit) {
+    public CreditAccount(Integer number, long balance, Customer owner, long limit) {
         super(number, balance, owner);
         this.creditLimit = limit;
     }
 
-    public double getCreditLimit() {
+    public long getCreditLimit() {
         return this.creditLimit;
     }
 
     @Override
-    protected boolean isWithdrawPossible(double amount) {
+    protected boolean isWithdrawPossible(long amount) {
         return (getBalance() - amount) >= (this.creditLimit * -1);
     }
 }

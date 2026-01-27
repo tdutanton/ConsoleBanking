@@ -3,16 +3,16 @@ import Customer.*;
 
 public abstract class Account {
     private final Integer accountNumber;
-    private double balance;
+    private long balance;
     private final Customer owner;
 
-    public Account(Integer number, double balance, Customer owner) {
+    public Account(Integer number, long balance, Customer owner) {
         this.accountNumber = number;
         this.balance = balance;
         this.owner = owner;
     }
 
-    public OperationResult deposit(double amount) {
+    public OperationResult deposit(long amount) {
         if (!isAmountPositive(amount)) {
             return OperationResult.failure("Сумма депозита должна быть положительной");
         }
@@ -20,7 +20,7 @@ public abstract class Account {
         return OperationResult.success();
     }
 
-    public OperationResult withdraw(double amount) {
+    public OperationResult withdraw(long amount) {
         if (!isAmountPositive(amount)) {
             return OperationResult.failure("Сумма снятия должна быть положительной");
         }
@@ -31,7 +31,7 @@ public abstract class Account {
         return OperationResult.success();
     }
 
-    public OperationResult transfer(Account to, double amount) {
+    public OperationResult transfer(Account to, long amount) {
         if (!isAmountPositive(amount)) {
             return OperationResult.failure("Сумма перевода должна быть положительной");
         }
@@ -43,11 +43,11 @@ public abstract class Account {
         return OperationResult.success();
     }
 
-    protected boolean isAmountPositive(double amount) {
+    protected boolean isAmountPositive(long amount) {
         return amount > 0;
     }
 
-    protected boolean isWithdrawPossible(double amount) {
+    protected boolean isWithdrawPossible(long amount) {
         return this.balance > amount;
     }
 
@@ -56,10 +56,10 @@ public abstract class Account {
     }
 
     public Customer getOwner() { return this.owner; }
-    public double getBalance() { return this.balance; }
+    public long getBalance() { return this.balance; }
 
     @Override
     public String toString() {
-        return String.format("Банковский счет № %d, баланс: %.2f", getAccountNumber(), getBalance());
+        return String.format("Банковский счет № %d, баланс: %.2f", getAccountNumber(), getBalance() / 100.0);
     }
 }
