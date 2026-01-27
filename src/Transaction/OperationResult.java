@@ -1,5 +1,12 @@
-package Account;
+package Transaction;
 
+/**
+ * Неизменяемый класс, представляющий результат банковской операции.
+ * <p>
+ * Используется для безопасного возврата статуса операции и, при необходимости,
+ * сообщения об ошибке.
+ * </p>
+ */
 public class OperationResult {
     private final boolean success;
     private final String errorMessage;

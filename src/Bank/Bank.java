@@ -9,6 +9,14 @@ import Utils.IDGenerator;
 import java.util.ArrayList;
 import java.util.Objects;
 
+/**
+ * Основной класс банковской системы.
+ * <p>
+ * Управляет клиентами, счетами и транзакциями.
+ * Обеспечивает уникальность номеров счетов и генерацию ID клиентов
+ * через внешние генераторы.
+ * </p>
+ */
 public class Bank {
     private ArrayList<Customer> customers;
     private ArrayList<Account> accounts;

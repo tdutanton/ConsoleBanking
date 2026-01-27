@@ -3,6 +3,12 @@ Educational project - implementation of Console Banking app with Java
 
 Консольное приложение, моделирующее базовые операции банковской системы: создание клиентов, открытие счетов, проведение транзакций и генерация отчётов.
 
+<div>
+  <img src="resources/CBank_1.jpg" style="margin-right: 10px;"/>
+  <img src="resources/CBank_2.jpg" style="margin-right: 10px;"/>
+  <img src="resources/CBank_3.jpg" />
+</div>  
+
 ## Описание
 
 Проект демонстрирует принципы объектно-ориентированного программирования (инкапсуляция, наследование, полиморфизм) и включает:
@@ -31,27 +37,32 @@ Educational project - implementation of Console Banking app with Java
 
 ## Структура проекта  
 src/  
-├── Main.java  
+├── Main.java    
 ├── Account/  
 │ ├── Account.java  
 │ ├── CreditAccount.java  
-│ ├── DebitAccount.java  
-│ └── OperationResult.java  
+│ └── DebitAccount.java  
+│  
 ├── Bank/  
 │ └── Bank.java  
+│  
 ├── Customer/  
 │ └── Customer.java  
+│
 ├── Interaction/  
 │ └── Interaction.java  
+│
 ├── Transaction/  
 │ ├── Transaction.java  
 │ ├── TransactionService.java  
+│ ├── OperationResult.java  
 │ └── Type.java  
+│  
 └── Utils/  
-├── BankNumberGenerator.java  
-├── IDGenerator.java  
-├── MathRandomGenerator.java  
-└── SequentialIDGenerator.java  
+    ├── BankNumberGenerator.java  
+    ├── IDGenerator.java  
+    ├── MathRandomGenerator.java  
+    └── SequentialIDGenerator.java  
 
 ---
 

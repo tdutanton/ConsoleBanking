@@ -8,6 +8,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
+/**
+ * Класс для взаимодействия с пользователем через консоль.
+ * <p>
+ * Реализует меню управления банковской системой и обработку пользовательского ввода.
+ * Связывает действия пользователя с методами {@link Bank}.
+ * </p>
+ */
 public class Interaction {
     private final Bank bank;
     private final Scanner scanner;

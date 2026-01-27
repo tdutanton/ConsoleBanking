@@ -4,6 +4,13 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
 
+/**
+ * Класс, представляющий запись о банковской транзакции.
+ * <p>
+ * Содержит тип операции, сумму, участвующие счета, временную метку,
+ * статус выполнения и поясняющее сообщение.
+ * </p>
+ */
 public class Transaction {
     private Type type;
     private long amount;
